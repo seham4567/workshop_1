@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+
     ];
 
     /**
@@ -43,32 +43,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role(){
-        return $this->belongsTo( related: Role::class, foreignKey: 'role_id');
-    }
 
-
-    public function hasAbility($permissions){
-
-        
-        $role= $this->role;
-        
-        if (!$role) {
-        
-        return false;
-        
-        }
-        
-        foreach ($role->permissions as $permission) {
-        
-        if (is_array($permissions) && in_array($permission, $permissions)) {
-        
-        return true;
-        
-        } else if (is_string($permissions) && strcmp($permissions,$permission) == 0) { return true;
-        
-        }
-        }
-        }
 
 }

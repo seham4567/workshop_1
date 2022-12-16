@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,15 +18,19 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function login_page(){
+        return view('Admin.Layouts.login');
+
+     }
     public function login(Request $request){
+
         $credendtial=$request->only('email','password');
 
-        if(Auth::guard('admin')->attempt($credendtial)){
-
+        if(Auth::attempt($credendtial)){
 
                 return redirect(route('dasboard'));
         }
-        
+
         Alert::error('failed','notfound');
         return redirect()->back();
     }
@@ -36,22 +41,14 @@ class AdminController extends Controller
         return view('Admin.Layouts.login');
 
     }
-    public function index()
-    {
-        return view('main');
-        return view('roles.user.index');
-    }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $roles=Role::get();
-        return view('roles.user.create',compact('roles'));
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,11 +59,10 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         // return $request;
-        Admin::create([
+        User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
-            'role_id'=>$request->role_id,
         ]);
 
         return redirect()->back();
@@ -118,11 +114,6 @@ class AdminController extends Controller
         //
     }
 
-    public function test()
-    {
-        $role=Admin::with('role')->first();
-        // return $role->permissions;
-        return $role->role->permissions;
-    }
+
 
 }

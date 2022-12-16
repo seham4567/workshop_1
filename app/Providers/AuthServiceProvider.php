@@ -26,12 +26,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        foreach(config('global. permissions') as $ability => $value) {
-            Gate::define($ability, function ($auth) use ($ability){ 
-                
-                return $auth->hasAbility($ability);
+         /* define a admin user role */
+         Gate::define('isAdmin', function($user) {
+            return $user->role == 'admin';
+         });
 
-});
-}
+         /* define a manager user role */
+         Gate::define('isManager', function($user) {
+             return $user->role == 'manager';
+         });
+
+         /* define a user role */
+         Gate::define('isUser', function($user) {
+             return $user->role == 'user';
+         });
     }
 }

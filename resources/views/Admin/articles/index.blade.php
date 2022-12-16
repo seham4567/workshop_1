@@ -1,11 +1,11 @@
 @extends('Admin.Layouts.master')
 
 @section('title')
-    
+
 @endsection
 
 @section('css')
-    
+
 @endsection
 
 @section('content')
@@ -53,13 +53,17 @@
                                     <td>{{ $article->article }}</td>
                                     <td><a class="btn btn-primary" href="{{ route('articles.edit', $article->id) }}"
                                             role="button">edit</a></td>
+                                            @can('isAdmin')
+
                                     <td>
                                         <form action="{{ route('articles.destroy', $article->id) }}" method="POST">
                                           @csrf
                                           @method('delete')
                                           <button type="submit"class="btn btn-primary" >delete</button>
                                         </form>
-                                    </td>
+                                    </td>                                            @endcan
+
+
                                 </tr>
                             @endforeach
 
@@ -73,14 +77,14 @@
         </div>
     </div>
     <!-- /.row -->
-    
-
-
-                    
 
 
 
-                    
+
+
+
+
+
 
                 </div>
             </div> <!-- /.row (main row) -->
@@ -88,9 +92,9 @@
         </div><!-- /.container-fluid -->
 
     </section> <!-- /.content -->
- </div>  
+ </div>
 @endsection
 
 @section('script')
-    
+
 @endsection

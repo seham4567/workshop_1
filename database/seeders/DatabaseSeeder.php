@@ -23,11 +23,23 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::create([
-            'name' => 'Test User',
-           'email'=>'seham@yahoo.com',
-           'password'=>Hash::make(123456789)
 
-        ]);
+
+
+ $user =[ [
+            'name'  => 'Admin',
+            'email' => 'Admin@user.com',
+            'password' => bcrypt('password'),
+            'role'=>'admin'
+        ],
+        [
+            'name'  => 'User',
+            'email' => 'user@user.com',
+            'password' => bcrypt('password'),
+            'role' =>'user'
+        ]];
+        User::insert($user);
+
+        
     }
 }

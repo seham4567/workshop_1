@@ -17,7 +17,7 @@ class ArticlesController extends Controller
     {
         $articles=Article::get();
 
-        return view('Admin.articles.index',compact('articles'));
+        return view('Admin.Pages.Pages.articles.index',compact('articles'));
     }
 
     /**
@@ -27,7 +27,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('Admin.articles.create');
+        return view('Admin.Pages.Pages.articles.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article=Article::findorfail($id);
-        return view('Admin.articles.edit',compact('article'));
+        return view('Admin.Pages.Pages.articles.edit',compact('article'));
     }
 
     /**
@@ -91,7 +91,10 @@ class ArticlesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {    $this->authorize('isAdmin');
+
+
+
         $article=Article::findorfail($id);
         $article->delete();
         Alert::success('Success Title', 'deleted');
